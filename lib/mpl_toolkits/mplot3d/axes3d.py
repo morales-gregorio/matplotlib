@@ -457,24 +457,21 @@ class Axes3D(Axes):
 
         collections_and_patches = (
             artist for artist in self._children
-            if isinstance(artist, (mcoll.Collection, mpatches.Patch))
+            if isinstance(artist, (mcoll.Collection, mpatches.Patch, art3d.Line3D))
             and artist.get_visible())
         if self.computed_zorder:
             # Calculate projection of collections and patches and zorder
             # them. Make sure they are drawn above the grids.
             zorder_offset = max(axis.get_zorder()
                                 for axis in self._axis_map.values()) + 1
-            collection_zorder = patch_zorder = zorder_offset
+            zorder = zorder_offset
 
             for artist in sorted(collections_and_patches,
                                  key=lambda artist: artist.do_3d_projection(),
                                  reverse=True):
-                if isinstance(artist, mcoll.Collection):
-                    artist.zorder = collection_zorder
-                    collection_zorder += 1
-                elif isinstance(artist, mpatches.Patch):
-                    artist.zorder = patch_zorder
-                    patch_zorder += 1
+                artist.zorder = zorder
+                zorder += 1
+
         else:
             for artist in collections_and_patches:
                 artist.do_3d_projection()
