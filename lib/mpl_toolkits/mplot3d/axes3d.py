@@ -457,7 +457,9 @@ class Axes3D(Axes):
 
         collections_and_patches = (
             artist for artist in self._children
-            if isinstance(artist, (mcoll.Collection, mpatches.Patch, art3d.Line3D))
+            if isinstance(artist, (mcoll.Collection,
+                                   mpatches.Patch,
+                                   art3d.Line3D))
             and artist.get_visible())
         if self.computed_zorder:
             # Calculate projection of collections and patches and zorder

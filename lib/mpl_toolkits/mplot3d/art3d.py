@@ -270,8 +270,8 @@ class Line3D(lines.Line2D):
 
         zs = [point[2] for point in xyslist]
         return max(zs)
-            
-        
+
+
 def line_2d_to_3d(line, zs=0, zdir='z'):
     """
     Convert a `.Line2D` to a `.Line3D` object.
