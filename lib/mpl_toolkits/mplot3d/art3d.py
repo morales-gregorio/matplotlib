@@ -261,7 +261,17 @@ class Line3D(lines.Line2D):
         super().draw(renderer)
         self.stale = False
 
+    def do_3d_projection(self):
+        """
+        Project the points according to renderer matrix.
+        """
+        xyslist = [proj3d.proj_transform(*points, self.axes.M)
+                   for points in np.array(self._verts3d).T]
 
+        zs = [point[2] for point in xyslist]
+        return max(zs)
+            
+        
 def line_2d_to_3d(line, zs=0, zdir='z'):
     """
     Convert a `.Line2D` to a `.Line3D` object.
